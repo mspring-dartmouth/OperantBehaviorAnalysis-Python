@@ -66,11 +66,14 @@ if len(user_args) != 0:
         root = Tk()  # noqa
         root.withdraw()
         path_to_files = filedialog.askdirectory()
+
 # If no user input was provided, prompt for all variables. 
 else:
     print('Please select a directory containing files for analysis.')
     root = Tk()  # noqa
     # root.withdraw()
+
+    # Input box for directory. 
     folderPath = StringVar()
     a = Label(root ,text="Enter name")
     a.grid(row=0,column = 0)
@@ -79,16 +82,22 @@ else:
     btnFind = Button(root, text="Browse Folder",command=getFolderPath)
     btnFind.grid(row=0,column=2)
 
+
+    # Check box for user to specify whether they would like to normalize licking by water intake. 
     norm_label = Label(root, text='Normalize licking by water intake?')
     norm_label.grid(row=1, column=0)
     norm_true = IntVar()
     Checkbutton(root, text='Check for "Yes"', variable=norm_true).grid(row=1, column=1, sticky=W)
 
+
+    # Check box for user to specify whether they would like to include the first block of presentations.
     drop_label = Label(root, text='Drop first block of presentations from analysis?')
     drop_label.grid(row=2, column=0)
     drop_true = IntVar()
     Checkbutton(root, text='Check for "Yes"', variable=drop_true).grid(row=2, column=1, sticky=W)
 
+
+    # Check boxes for user to specify grouping variable. 
     group_label = Label(root, text='Grouping criteria:')
     group_label.grid(row=3, column=0)
     tube_group = IntVar()
@@ -96,15 +105,16 @@ else:
     Checkbutton(root, text='Group by CONCENTRATION', variable=conc_group).grid(row=3, column=1, sticky=W)
     Checkbutton(root, text='Group by TUBE', variable=tube_group).grid(row=3, column=2, sticky=W)
 
+
+    # Makes the "quit" button and displays the window in the center of the screen. Destroy Tk object when done. 
     Button(root, text='Done', command=root.quit).grid(row=4, column=1, sticky=W, pady=3)
-
     root.eval('tk::PlaceWindow . center')
-
     mainloop()
     root.destroy()
 
-    path_to_files = folderPath.get()
 
+    # Assign variables based on user selection. 
+    path_to_files = folderPath.get()
     norm_by_water = bool(norm_true.get())
     drop_first_block = bool(drop_true.get())
     if conc_group.get():
